@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523416235835",
+    "project_id": "smart-messenger-7e83f",
+    "storage_bucket": "smart-messenger-7e83f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523416235835:android:fe083973aebcc041f3111e",
+        "android_client_info": {
+          "package_name": "com.example.smartmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523416235835-rntl5ec9kdlic100c68l7un9nk33e2em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvqS9z_ebfF7UsnUIYu8J2UFjdVUNkr8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523416235835-rntl5ec9kdlic100c68l7un9nk33e2em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
