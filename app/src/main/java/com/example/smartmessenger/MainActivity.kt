@@ -30,7 +30,11 @@ class MainActivity : AppCompatActivity() {
 
         val navController = getRootNavController()
         val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-        graph.setStartDestination(R.id.singInFragment)
+        val uId = Singletons.appSettings.getCurrentUId()
+        if (uId == null)
+            graph.setStartDestination(R.id.singInFragment)
+        else
+            graph.setStartDestination(R.id.chatListFragment)
         navController.graph = graph
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)

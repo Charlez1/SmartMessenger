@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/singInFragment"
-        android:name="com.example.smartmessenger.authentication.SingInFragment"
+        android:name="com.example.smartmessenger.screens.authentication.SingInFragment"
         android:label="fragment_sing_in"
         tools:layout="@layout/fragment_sing_in">
         <action
             android:id="@+id/action_singInFragment_to_singUpFragment"
             app:destination="@id/singUpFragment" />
         <action
-            android:id="@+id/action_singInFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            android:id="@+id/action_singInFragment_to_dialogsFragment"
+            app:destination="@id/chatListFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/singUpFragment"
-        android:name="com.example.smartmessenger.authentication.SingUpFragment"
+        android:name="com.example.smartmessenger.screens.authentication.SingUpFragment"
         android:label="fragment_sing_up"
         tools:layout="@layout/fragment_sing_up">
         <action
@@ -29,7 +29,16 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.smartmessenger.profile.ProfileFragment"
+        android:name="com.example.smartmessenger.screens.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="com.example.smartmessenger.screens.chatlist.ChatListFragment"
+        android:label="fragment_dialogs"
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_dialogsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

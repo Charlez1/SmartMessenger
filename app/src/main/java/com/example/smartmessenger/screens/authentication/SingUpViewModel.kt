@@ -1,12 +1,13 @@
-package com.example.smartmessenger.authentication
+package com.example.smartmessenger.screens.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.smartmessenger.*
-import com.example.smartmessenger.base.BaseViewModel
-import com.example.smartmessenger.base.requireValue
+import com.example.smartmessenger.screens.BaseViewModel
+import com.example.smartmessenger.screens.requireValue
 import com.example.smartmessenger.model.Field
+import com.example.smartmessenger.model.repositories.account.AccountsRepository
 
 class SingUpViewModel(
     private val accountsRepository: AccountsRepository

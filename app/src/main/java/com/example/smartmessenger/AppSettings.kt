@@ -1,15 +1,11 @@
 package com.example.smartmessenger
 
+import com.google.firebase.auth.FirebaseUser
+
 interface AppSettings {
 
-    /**
-     * Get auth token of the current logged-in user.
-     */
-    fun getCurrentToken(): String?
+    fun getCurrentUId(): String?
 
-    /**
-     * Set auth token of the logged-in user.
-     */
-    fun setCurrentToken(token: String?)
+    fun setCurrentUId(uId: String?)
 
 }

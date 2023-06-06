@@ -1,15 +1,13 @@
-package com.example.smartmessenger.authentication
+package com.example.smartmessenger.screens.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.smartmessenger.*
-import com.example.smartmessenger.base.BaseViewModel
-import com.example.smartmessenger.base.requireValue
+import com.example.smartmessenger.screens.BaseViewModel
+import com.example.smartmessenger.screens.requireValue
 import com.example.smartmessenger.model.Field
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.example.smartmessenger.model.repositories.account.AccountsRepository
 
 class SingInViewModel(
     private val accountsRepository: AccountsRepository

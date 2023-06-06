@@ -1,4 +1,4 @@
-package com.example.smartmessenger.profile
+package com.example.smartmessenger.screens.profile
 
 import androidx.lifecycle.ViewModel
 
