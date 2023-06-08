@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+.ipynb_checkpoints
+.gitignore
