@@ -1,5 +1,3 @@
-# SmartMessenger
-
 # Android Messenger Application
 
 ## Project Description
