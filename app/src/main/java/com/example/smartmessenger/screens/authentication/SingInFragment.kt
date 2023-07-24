@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.smartmessenger.*
 import com.example.smartmessenger.screens.BaseFragment
 import com.example.smartmessenger.databinding.FragmentSingInBinding
+import com.example.smartmessenger.model.observeEvent
+import com.example.smartmessenger.screens.createViewModel
 
 class SingInFragment : BaseFragment(R.layout.fragment_sing_in) {
 
@@ -21,6 +24,10 @@ class SingInFragment : BaseFragment(R.layout.fragment_sing_in) {
 
         binding.signInButton.setOnClickListener { onSignInPressed() }
         binding.signUpButton.setOnClickListener { onSignUpPressed() }
+
+        // we clear the errors of the fields if the user starts to enter something in them
+        binding.emailEditText.addTextChangedListener { binding.emailTextInput.error = null }
+        binding.passwordEditText.addTextChangedListener { binding.passwordTextInput.error = null }
 
         observeState()
         observeClearPasswordEvent()
@@ -58,7 +65,8 @@ class SingInFragment : BaseFragment(R.layout.fragment_sing_in) {
     private fun onSignInPressed() {
         viewModel.singIn(
             email = binding.emailEditText.text.toString(),
-            password = binding.passwordEditText.text.toString()
+            password = binding.passwordEditText.text.toString(),
+            rememberUser = binding.checkRememberMe.isChecked
         )
     }
 

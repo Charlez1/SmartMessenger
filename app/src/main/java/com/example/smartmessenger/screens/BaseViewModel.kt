@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartmessenger.*
-import com.example.smartmessenger.LiveEvent
-import com.example.smartmessenger.MutableLiveEvent
+import com.example.smartmessenger.model.LiveEvent
+import com.example.smartmessenger.model.MutableLiveEvent
+import com.example.smartmessenger.model.publishEvent
 import com.hfad.fitness.async.ErrorResult
 import com.hfad.fitness.async.Result
 import com.hfad.fitness.async.SuccessResult

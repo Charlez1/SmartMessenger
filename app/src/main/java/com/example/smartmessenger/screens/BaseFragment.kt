@@ -9,7 +9,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.example.smartmessenger.R
 import com.example.smartmessenger.databinding.PartResultBinding
-import com.example.smartmessenger.observeEvent
+import com.example.smartmessenger.model.observeEvent
 import com.hfad.fitness.async.ErrorResult
 import com.hfad.fitness.async.PendingResult
 import com.hfad.fitness.async.Result
@@ -25,7 +25,6 @@ abstract class BaseFragment(@LayoutRes layoutId: Int): Fragment(layoutId) {
         viewModel.showErrorMessageResEvent.observeEvent(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
-
     }
 
     fun <T> renderResult(root: ViewGroup,

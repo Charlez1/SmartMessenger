@@ -10,13 +10,11 @@ class FirebaseAuthenticationSource(
     private val auth: FirebaseAuth
 ): AuthenticationSource {
 
-    override suspend fun signIn(email: String, password: String, setCurrentUId: (String?) -> Unit) {
+    override suspend fun signIn(email: String, password: String) {
         try {
             auth.signInWithEmailAndPassword(email, password).await()
-            val currentUId = getCurrentUId()
-            setCurrentUId(currentUId)
-        } catch (exception: Exception){
-            when(exception) {
+        } catch (exception: Exception) {
+            when (exception) {
                 is FirebaseTooManyRequestsException -> throw (TooManyRequestsException(exception.message ?: ""))
                 is FirebaseAuthInvalidCredentialsException -> throw (InvalidUserException(exception.message ?: ""))
                 else -> processingRemainingExceptions(exception)
@@ -24,22 +22,22 @@ class FirebaseAuthenticationSource(
         }
     }
 
-    override suspend fun signUp(username: String, email: String, password: String) {
+    override suspend fun signUp(email: String, password: String) {
         try {
             auth.createUserWithEmailAndPassword(email, password).await()
         } catch (exception: Exception) {
-            when(exception) {
-                is FirebaseAuthWeakPasswordException -> throw(AuthWeakPasswordException(exception.message ?: ""))
-                is FirebaseAuthEmailException -> throw(AccountAlreadyExistsException(exception.message ?: ""))
+            when (exception) {
+                is FirebaseAuthWeakPasswordException -> throw AuthWeakPasswordException(exception.message ?: "")
+                is FirebaseAuthEmailException -> throw AccountAlreadyExistsException(exception.message ?: "")
                 else -> processingRemainingExceptions(exception)
             }
         }
     }
 
     private fun processingRemainingExceptions(exception: Exception) {
-        when(exception) {
-            is FirebaseNetworkException -> throw(ConnectionException(exception.message ?: ""))
-            is FirebaseAuthWebException -> throw (BackendException(exception.message ?: ""))
+        when (exception) {
+            is FirebaseNetworkException -> throw ConnectionException(exception.message ?: "")
+            is FirebaseAuthWebException -> throw BackendException(exception.message ?: "")
             is FirebaseAuthException -> throw AuthException(exception.message ?: "")
             else -> throw UnknownException(exception.message ?: "")
         }
@@ -48,7 +46,7 @@ class FirebaseAuthenticationSource(
     override fun getCurrentUId(): String {
         try {
             val user = auth.currentUser
-            return user?.uid.toString()
+            return user?.uid ?: ""
         } catch (exception: Exception) {
             processingRemainingExceptions(exception)
             throw exception

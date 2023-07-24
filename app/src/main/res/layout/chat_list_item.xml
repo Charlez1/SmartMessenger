@@ -5,30 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clickableLayout"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_height="60dp"
+    android:layout_margin="10dp"
 
-    <ImageView
+    android:background="@android:color/white">
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/profile_picture"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/avatar"
+        app:cardCornerRadius="1000dp"
+        android:shape="ring"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/nickname"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_very_small"
+            android:src="@drawable/avatar_icon"/>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="some name"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/black"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:layout_marginHorizontal="10dp"
 
         app:layout_constraintLeft_toRightOf="@id/profile_picture"
@@ -36,20 +45,19 @@
         app:layout_constraintRight_toLeftOf="@id/timestamp"
         app:layout_constraintBottom_toTopOf="@id/last_message"/>
 
-
     <TextView
         android:id="@+id/last_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="some message"
-        android:textSize="16sp"
+        android:textSize="13sp"
         android:textColor="@color/black"
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="10dp"
 
         app:layout_constraintLeft_toRightOf="@id/profile_picture"
         app:layout_constraintTop_toBottomOf="@id/nickname"
-        app:layout_constraintRight_toLeftOf="@id/count_unchecked_messenges"
+        app:layout_constraintRight_toLeftOf="@id/count_unchecked_messages"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 
@@ -58,7 +66,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="16 28"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
@@ -69,18 +77,17 @@
 
 
     <TextView
-        android:id="@+id/count_unchecked_messenges"
+        android:id="@+id/count_unchecked_messages"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="10"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/last_message"
         app:layout_constraintRight_toRightOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

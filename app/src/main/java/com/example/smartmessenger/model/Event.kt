@@ -1,4 +1,4 @@
-package com.example.smartmessenger
+package com.example.smartmessenger.model
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

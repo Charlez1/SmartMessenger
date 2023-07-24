@@ -1,25 +1,30 @@
 package com.example.smartmessenger.screens.chatlist
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.smartmessenger.model.LiveEvent
+import com.example.smartmessenger.model.MutableLiveEvent
+import com.example.smartmessenger.model.publishEvent
 import com.example.smartmessenger.model.repositories.entity.ChatItem
-import com.example.smartmessenger.model.repositories.chatitem.ChatItemRepository
+import com.example.smartmessenger.model.repositories.chatlist.ChatListRepository
 import com.example.smartmessenger.screens.BaseViewModel
-import com.hfad.fitness.async.PendingResult
-import com.hfad.fitness.async.Result
+import kotlinx.coroutines.flow.Flow
 
 class ChatListViewModel(
-    private val repository: ChatItemRepository
+    private val repository: ChatListRepository
 ) : BaseViewModel(), DialogsListActionListener {
 
 
-    private val _dialogsList = MutableLiveData<Result<List<ChatItem>>> (PendingResult())
-    val dialogsList: LiveData<Result<List<ChatItem>>> = _dialogsList
+    lateinit var dialogsList: Flow<PagingData<ChatItem>>
+
+    private val _navigateToCurrentChat = MutableLiveEvent<String> ()
+    val navigateToCurrentChat: LiveEvent<String> = _navigateToCurrentChat
 
     private fun loadDialogsList() = viewModelScope.safeLaunch {
         try {
-            into(_dialogsList) { repository.getDialogList()}
+            dialogsList = repository.getPagedDialogList()
         } catch (e: Exception) {
 
         }
@@ -29,8 +34,7 @@ class ChatListViewModel(
         loadDialogsList()
     }
 
-    override fun navigateToChat(chatId: String) {
-        TODO("Not yet implemented")
-    }
+
+    override fun navigateToChat(chatId: String) = _navigateToCurrentChat.publishEvent(chatId)
 
 }

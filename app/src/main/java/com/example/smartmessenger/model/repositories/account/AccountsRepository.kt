@@ -4,7 +4,7 @@ import com.example.smartmessenger.SignUpData
 
 interface AccountsRepository {
 
-    suspend fun signIn(email: String, password: String)
+    suspend fun signIn(email: String, password: String, rememberUser: Boolean)
 
     suspend fun signUp(singUpData: SignUpData)
 }

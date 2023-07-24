@@ -1,4 +1,4 @@
-package com.example.smartmessenger
+package com.example.smartmessenger.screens
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

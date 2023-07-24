@@ -13,6 +13,7 @@ data class SignUpData(
         if (username.isBlank()) throw EmptyFieldException(Field.Username)
         if (email.isBlank()) throw EmptyFieldException(Field.Email)
         if (password.isBlank()) throw EmptyFieldException(Field.Password)
-        if (password != repeatPassword) throw PasswordMismatchException(R.string.test_error.toString())
+        if (repeatPassword.isBlank()) throw EmptyFieldException(Field.RepeatPassword)
+        if (password != repeatPassword) throw PasswordMismatchException(R.string.password_mismatch_error.toString())
     }
 }

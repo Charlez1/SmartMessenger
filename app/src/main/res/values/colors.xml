@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="no_color">#00FFFFFF</color>
+
+
+    <color name="bg_item_message_color">#FFFFFFFF</color>
+    <color name="bg_item_message_current_user_color">#96C7FF</color>
+
+    <color name="message_toolbar">#474747</color>
+    <color name="main_toolbar_color">#04B3FB</color>
+    <color name="chat_list_background">#FFFFFF</color>
+
+    <color name="background_color">#a5ecfb</color>
+
+    <color name="dark_blue_color">#2451D7</color>
+    <color name="light_gray">#868686</color>
+
+
+    <color name="field_color">#71809C</color>
+    <color name="auth_background_color">#a5ecfb</color>
+    <color name="button_background_button">#F36400</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color">#DCE0E7</color>
 </resources>

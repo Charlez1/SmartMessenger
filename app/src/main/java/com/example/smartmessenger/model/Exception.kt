@@ -12,22 +12,25 @@ class EmptyFieldException(
     val field: Field
 ) : AppException()
 
+
+// sign up exception
 class AuthWeakPasswordException(message: String) : AppException(message = message)
-
 class PasswordMismatchException(message: String) : AppException(message = message)
-
 class AccountAlreadyExistsException(message: String) : AppException(message = message)
 
+
+// overall auth exception
+class InvalidUserException(message: String) : AppException(message = message)
 class AuthException(message: String) : AppException(message = message)
 
-class InvalidUserException(message: String) : AppException(message = message)
+// account database exception
 
+
+// other database exception
 class ConnectionException(message: String) : AppException(message = message)
-
 class BackendException(message: String) : AppException(message = message)
-
 class TooManyRequestsException(message: String) : AppException(message = message)
 
-class AuthRecentLoginRequiredException(message: String) : AppException(message = message)
+class AuthRecentLoginRequiredException(message: String) : AppException(message = message)//TODO?
 
 class UnknownException(message: String) : AppException(message = message)

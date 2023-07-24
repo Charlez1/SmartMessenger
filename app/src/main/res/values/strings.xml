@@ -1,12 +1,17 @@
 <resources>
-    <string name="app_name">Smart Messenger</string>
+    <string name="app_name">Dolphi</string>
 
     <string name="field_email">email</string>
     <string name="field_username">username</string>
     <string name="field_password">password</string>
     <string name="field_repeat_password">repeat password</string>
-    <string name="action_sign_in">Sign In</string>
-    <string name="action_create_account">Create Account</string>
+    <string name="action_sign_in">Log In</string>
+    <string name="action_create_account">Don’t have an Account?</string>
+    <string name="action_sign_up">Have an Account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot password?</string>
+
 
     <string name="connection_error">Can\'t connect to the server</string>
     <string name="auth_error">Auth error</string>
@@ -14,8 +19,13 @@
     <string name="internal_error">Internal error! Please try again later.</string>
     <string name="invalid_user_error">Wrong login or password</string>
     <string name="too_many_requests_error">You have exceeded the maximum number of allowed attempts. Please try again later</string>
+    <string name="password_mismatch_error">Password mismatch</string>
+    <string name="auth_weak_password">Password is weak. Change it</string>
+    <string name="account_already_exists_error">Account with this email already exist</string>
 
     <string name="field_is_empty">Field is empty</string>
+    <string name="remember_me">Remember Me</string>
+
 
     //TODO
     <string name="test_error"> TEST ERROR CHANGE LATER</string>

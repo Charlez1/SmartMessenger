@@ -40,5 +40,18 @@
         <action
             android:id="@+id/action_dialogsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_chatListFragment_to_currentChatFragment"
+            app:destination="@id/currentChatFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/currentChatFragment"
+        android:name="com.example.smartmessenger.screens.currentchat.CurrentChatFragment"
+        android:label="CurrentChatFragment">
+        <argument
+            android:name="chatId"
+            app:argType="string"/>
+    </fragment>
+
 </navigation>
