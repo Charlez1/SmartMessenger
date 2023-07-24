@@ -19,3 +19,7 @@ Here are some screenshots of the Android messenger application:
 
 ![Screenshot 1](screenshots/1.jpg)
 ![Screenshot 2](screenshots/2.jpg)
+
+# And also 
+
+In the future, machine learning elements will be added for such functions as: voice control, decryption of voice messages, generation of messages based on a voice request, etc.
