@@ -7,7 +7,7 @@ This project is an Android messenger application developed in Kotlin. The app al
 
 ## Used Libraries and Technologies
 
-- Firesrore Database for real-time message exchange.
+- Firestore Database for real-time message exchange.
 - Firebase Authentication for user authentication.
 - RecyclerView for efficient message list display with paging 3 library
 - MVVM (Model-View-ViewModel) architecture for a clean and scalable app design 
