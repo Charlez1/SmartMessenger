@@ -5,8 +5,11 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FirebaseAuthenticationSource(
+@Singleton
+class FirebaseAuthenticationSource @Inject constructor(
     private val auth: FirebaseAuth
 ): AuthenticationSource {
 
@@ -22,7 +25,8 @@ class FirebaseAuthenticationSource(
         }
     }
 
-    override suspend fun signUp(email: String, password: String) {
+    override suspend fun
+            signUp(email: String, password: String) {
         try {
             auth.createUserWithEmailAndPassword(email, password).await()
         } catch (exception: Exception) {
@@ -32,6 +36,10 @@ class FirebaseAuthenticationSource(
                 else -> processingRemainingExceptions(exception)
             }
         }
+    }
+
+    override suspend fun deleteCurrentUser() {
+        auth.currentUser?.delete()?.await()
     }
 
     private fun processingRemainingExceptions(exception: Exception) {

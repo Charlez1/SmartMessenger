@@ -2,11 +2,16 @@ package com.example.smartmessenger.model.source.chats
 
 import com.example.smartmessenger.ConnectionException
 import com.example.smartmessenger.UnknownException
+import com.example.smartmessenger.model.repositories.entity.InterlocutorData
 import com.example.smartmessenger.model.repositories.entity.Message
+import com.example.smartmessenger.model.source.users.UserData
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FirestoreChatsSource(
+@Singleton
+class FirestoreChatsSource @Inject constructor(
     private val database: FirebaseFirestore
 ) : ChatsSource {
 
@@ -32,6 +37,8 @@ class FirestoreChatsSource(
                     dialogId = document.id,
                     firstMemberId = document.getString("first_member_id") ?: "",
                     secondMemberId = document.getString("second_member_id") ?: "",
+                    firstMemberName = document.getString("first_member_name") ?: "",
+                    secondMemberName = document.getString("second_member_name") ?: "",
                     lastMessageText = document.getString("last_message_text") ?: "",
                     lastMessageTimestamp = document.getString("last_message_timestamp") ?: ""
                 )
@@ -51,17 +58,29 @@ class FirestoreChatsSource(
             dialogId = document.id,
             firstMemberId = document.getString("first_member_id") ?: "",
             secondMemberId = document.getString("second_member_id") ?: "",
+            firstMemberName = document.getString("first_member_name") ?: "",
+            secondMemberName = document.getString("second_member_name") ?: "",
             lastMessageText = document.getString("last_message_text") ?: "",
             lastMessageTimestamp = document.getString("last_message_timestamp") ?: ""
         )
     }
 
-    override suspend fun createDialog() {
+    override suspend fun createDialog(
+        currentUserData: UserData,
+        interlocutorUserData: InterlocutorData
+    ) {
         TODO("Not yet implemented")
     }
 
+
     override suspend fun setLastMessage(chatId: String, message: Message) {
-        TODO("Not yet implemented")
+        val chatReference = database.collection("chats").document(chatId)
+        chatReference.update(
+            hashMapOf(
+                "last_message_timestamp" to message.timestamp,
+                "last_message_text" to message.messageText
+            ) as Map<String, Any>
+        )
     }
 
     private fun processingRemainingExceptions(exception: FirebaseFirestoreException) {

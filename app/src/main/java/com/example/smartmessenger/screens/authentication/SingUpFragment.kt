@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.smartmessenger.*
 import com.example.smartmessenger.screens.BaseFragment
 import com.example.smartmessenger.databinding.FragmentSingUpBinding
 import com.example.smartmessenger.model.observeEvent
+import com.example.smartmessenger.model.repositories.entity.SignUpData
 import com.example.smartmessenger.screens.createViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SingUpFragment : BaseFragment(R.layout.fragment_sing_up) {
 
-    override val viewModel by createViewModel { SingUpViewModel(Singletons.accountsRepository) }
+    override val viewModel by viewModels<SingUpViewModel>()
     private lateinit var binding: FragmentSingUpBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,16 +28,22 @@ class SingUpFragment : BaseFragment(R.layout.fragment_sing_up) {
         binding.signUpButton.setOnClickListener { createAccountPressed() }
         binding.signInButton.setOnClickListener { onSignInPressed() }
 
+        observeFieldChangeToClearErrors()
+
+        observeState()
+        observeShowErrorToastEvent()
+        observeShowSuccessToastEvent()
+        observeNavigateToSingIn()
+
+        return binding.root
+    }
+
+    private fun observeFieldChangeToClearErrors() {
         binding.usernameEditText.addTextChangedListener { binding.usernameTextInput.error = null }
         binding.emailEditText.addTextChangedListener { binding.emailTextInput.error = null }
         binding.passwordEditText.addTextChangedListener { binding.passwordTextInput.error = null }
         binding.repeatPasswordEditText.addTextChangedListener { binding.repeatPasswordTextInput.error = null }
 
-        observeState()
-        observeShowErrorToastEvent()
-        observeNavigateToSingIn()
-
-        return binding.root
     }
 
     private fun observeState() = viewModel.state.observe(viewLifecycleOwner) {
@@ -43,18 +53,26 @@ class SingUpFragment : BaseFragment(R.layout.fragment_sing_up) {
             binding.repeatPasswordTextInput.error = if (it.emptyPasswordRepeatError) getString(R.string.field_is_empty) else null
 
             val isEnableViews = !it.signUpInProgress
+            binding.usernameTextInput.isEnabled = isEnableViews
             binding.emailTextInput.isEnabled = isEnableViews
             binding.passwordTextInput.isEnabled = isEnableViews
             binding.repeatPasswordTextInput.isEnabled = isEnableViews
+            binding.signUpButton.isEnabled = isEnableViews
+            binding.signInButton.isEnabled = isEnableViews
+
             binding.progressBar.visibility = if (it.signUpInProgress) View.VISIBLE else View.INVISIBLE
         }
 
+    private fun observeShowErrorToastEvent() = viewModel.showErrorToastEvent.observeEvent(viewLifecycleOwner) {
+        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun observeShowSuccessToastEvent() = viewModel.showSuccessToastEvent.observeEvent(viewLifecycleOwner) {
+        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+    }
+
     private fun observeNavigateToSingIn() = viewModel.navigateToSingIn.observeEvent(viewLifecycleOwner) {
             findNavController().popBackStack()
-        }
-
-    private fun observeShowErrorToastEvent() = viewModel.showErrorToastEvent.observeEvent(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
 
     private fun createAccountPressed() {

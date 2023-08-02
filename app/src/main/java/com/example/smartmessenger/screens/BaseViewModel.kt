@@ -17,7 +17,7 @@ open class BaseViewModel: ViewModel() {
     private val _showErrorMessageResEvent = MutableLiveEvent<Int>()
     val showErrorMessageResEvent: LiveEvent<Int> = _showErrorMessageResEvent
 
-    fun CoroutineScope.safeLaunch(block: suspend CoroutineScope.() -> Unit) {
+    fun safeLaunch(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch {
             try {
                 block.invoke(this)

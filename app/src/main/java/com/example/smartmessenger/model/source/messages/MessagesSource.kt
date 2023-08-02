@@ -6,9 +6,9 @@ import com.google.firebase.firestore.FieldValue
 
 interface MessagesSource {
 
-    fun removeStartAfterDocumentValue()
-
     suspend fun loadMessages(chatId: String, limit: Int, pageIndex: Int, handleNewMessage: HandleNewMessage) : List<Message>
+
+    fun removeStartAfterDocumentValue()
 
     suspend fun sendMessage(chatId: String, messageData: MessageData)
 

@@ -6,12 +6,17 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smartmessenger.Singletons
 import com.example.smartmessenger.databinding.MessageListItemBinding
 import com.example.smartmessenger.databinding.MessageListItemCurrentUserBinding
 import com.example.smartmessenger.model.repositories.entity.Message
+import com.example.smartmessenger.model.settings.AppSettings
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class CurrentChatAdapter : PagingDataAdapter<Message, RecyclerView.ViewHolder>(UsersDiffCallback()) {
+class CurrentChatAdapter(
+    private val appSettings: AppSettings
+) : PagingDataAdapter<Message, RecyclerView.ViewHolder>(UsersDiffCallback()) {
 
     private val TYPE_LEFT = 0
     private val TYPE_RIGHT = 1
@@ -39,7 +44,7 @@ class CurrentChatAdapter : PagingDataAdapter<Message, RecyclerView.ViewHolder>(U
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if ((getItem(position) as Message).sender == Singletons.appSettings.getCurrentUId()) {
+        return if ((getItem(position) as Message).sender == appSettings.getCurrentUId()) {
             TYPE_RIGHT
         } else {
             TYPE_LEFT

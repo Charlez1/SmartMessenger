@@ -12,6 +12,9 @@ class EmptyFieldException(
     val field: Field
 ) : AppException()
 
+class TooShortUsernameException(message: String) : AppException(message)
+
+class NonUniqueNameException(message: String) : AppException(message)
 
 // sign up exception
 class AuthWeakPasswordException(message: String) : AppException(message = message)

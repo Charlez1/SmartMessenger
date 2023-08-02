@@ -14,13 +14,16 @@ import com.example.smartmessenger.model.source.messages.MessagesSource
 import com.example.smartmessenger.model.source.messages.MessageData
 import com.example.smartmessenger.model.source.pagingsource.CurrentChatPagingSource
 import com.example.smartmessenger.screens.currentchat.HandleNewMessage
+import javax.inject.Inject
+import javax.inject.Singleton
 
 typealias MessagesPageLoader = suspend (pageSize: Int, pageIndex: Int) -> List<Message>
 
-class CurrentChatRepositoryImpl(
+@Singleton
+class CurrentChatRepositoryImpl @Inject constructor(
     private val messagesSource: MessagesSource,
     private val chatsSource: ChatsSource,
-    private val accountsSource: UsersSource,
+    private val usersSource: UsersSource,
     private val appSettings: AppSettings,
 ): CurrentChatRepository {
 
@@ -52,7 +55,7 @@ class CurrentChatRepositoryImpl(
     override suspend fun getInterlocutorData(chatId: String): InterlocutorData {
         val dialogData =  chatsSource.getDialogData(chatId)
         val interlocutorId = if(appSettings.getCurrentUId() == dialogData.firstMemberId) dialogData.secondMemberId else dialogData.firstMemberId
-        val userData = accountsSource.getUserData(interlocutorId)
+        val userData = usersSource.getUserData(interlocutorId)
         return InterlocutorData(
             nickname = userData.username,
             onlineStatus = ""
@@ -60,7 +63,7 @@ class CurrentChatRepositoryImpl(
     }
 
     override suspend fun setLastMessage(chatId: String, message: Message) {
-        messagesSource.setLastMessage(chatId, message)
+        chatsSource.setLastMessage(chatId, message)
     }
 
     override fun removeStartAfterDocumentValue() {

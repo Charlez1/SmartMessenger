@@ -2,39 +2,40 @@ package com.example.smartmessenger.screens.currentchat
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.example.smartmessenger.model.repositories.currentchat.CurrentChatRepository
 import com.example.smartmessenger.model.repositories.entity.InterlocutorData
 import com.example.smartmessenger.model.repositories.entity.Message
 import com.example.smartmessenger.screens.BaseViewModel
-import com.firebase.ui.auth.data.model.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-typealias HandleNewMessage = (hasNewIncomingMessage: Boolean) -> Unit
+typealias HandleNewMessage = (hasNewIncomingMessage: Message) -> Unit
 
-class CurrentChatViewModel(
+@HiltViewModel
+class CurrentChatViewModel @Inject constructor(
     private val repository: CurrentChatRepository
 ) : BaseViewModel() {
 
     lateinit var messageList: LiveData<PagingData<Message>>
 
-    private val _messageReceived = MutableLiveData<Boolean> ()
-    val messageReceived: LiveData<Boolean> = _messageReceived
+    private val _messageReceived = MutableLiveData<Message> ()
+    val messageReceived: LiveData<Message> = _messageReceived
 
 
     private val _interlocutorData = MutableLiveData<InterlocutorData> ()
     val interlocutorData: LiveData<InterlocutorData> = _interlocutorData
 
-    fun getMessages(chatId: String) = viewModelScope.safeLaunch {
+    fun getMessages(chatId: String) = safeLaunch {
         try {
-            val handleNewMessage: HandleNewMessage = { _messageReceived.value = it }
-            messageList = repository.getPagedMessageList(chatId, handleNewMessage)
+            val handleNewMessages: HandleNewMessage = { _messageReceived.value = it }
+            messageList = repository.getPagedMessageList(chatId, handleNewMessages)
         } catch (e: Exception) {
 
         }
     }
 
-    fun getInterlocutorData(chatId: String) = viewModelScope.safeLaunch {
+    fun getInterlocutorData(chatId: String) = safeLaunch {
         try {
             _interlocutorData.value = repository.getInterlocutorData(chatId)
         } catch (e: Exception) {
@@ -42,7 +43,7 @@ class CurrentChatViewModel(
         }
     }
 
-    fun setLastMessage(chatId: String, message: Message) = viewModelScope.safeLaunch {
+    fun setLastMessage(chatId: String, message: Message) = safeLaunch {
         try {
             repository.setLastMessage(chatId, message)
         } catch (e: Exception) {
@@ -55,7 +56,7 @@ class CurrentChatViewModel(
     }
 
 
-    fun sendMessage(chatId: String, messageText: String) = viewModelScope.safeLaunch {
+    fun sendMessage(chatId: String, messageText: String) = safeLaunch {
         try {
             repository.sendMessage(chatId, messageText)
         } catch (e: Exception) {

@@ -11,15 +11,21 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.example.smartmessenger.model.settings.AppSettings
 import com.example.smartmessenger.screens.authentication.SingInFragment
 import com.example.smartmessenger.screens.authentication.SingUpFragment
 import com.example.smartmessenger.screens.chatlist.ChatListFragment
 import com.example.smartmessenger.screens.currentchat.CurrentChatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     private var navController: NavController? = null
+    @Inject lateinit var appSettings: AppSettings
 
     private val fragmentListener = object : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
@@ -43,9 +49,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Singletons.init(this)
-
-
         FirebaseApp.initializeApp(this)
         navStaff()//TODO
 
@@ -55,14 +58,14 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         supportFragmentManager.unregisterFragmentLifecycleCallbacks(fragmentListener)
-        if (!Singletons.appSettings.getIsRememberUser())
-            Singletons.appSettings.setCurrentUId(null)
+        if (!appSettings.getIsRememberUser())
+            appSettings.setCurrentUId(null)
     }
 
     private fun navStaff() {
         val navController = getRootNavController()
         val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-        val uId = Singletons.appSettings.getCurrentUId()
+        val uId = appSettings.getCurrentUId()
         graph.setStartDestination(
             if (uId == null) R.id.singInFragment
             else R.id.chatListFragment)

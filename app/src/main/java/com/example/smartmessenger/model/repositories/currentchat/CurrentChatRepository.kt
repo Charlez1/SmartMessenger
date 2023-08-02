@@ -8,9 +8,9 @@ import com.example.smartmessenger.screens.currentchat.HandleNewMessage
 
 interface CurrentChatRepository {
 
-    fun removeStartAfterDocumentValue()
-
     suspend fun getPagedMessageList(chatId: String, handleNewMessage: HandleNewMessage): LiveData<PagingData<Message>>
+
+    fun removeStartAfterDocumentValue()
 
     fun removeNewMessageListener()
 
@@ -19,4 +19,5 @@ interface CurrentChatRepository {
     suspend fun sendMessage(chatId: String, messageText: String)
 
     suspend fun setLastMessage(chatId: String, message: Message)
+
 }

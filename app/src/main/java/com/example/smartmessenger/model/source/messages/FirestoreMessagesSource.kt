@@ -5,12 +5,15 @@ import com.example.smartmessenger.ConnectionException
 import com.example.smartmessenger.UnknownException
 import com.example.smartmessenger.model.repositories.entity.Message
 import com.example.smartmessenger.screens.currentchat.HandleNewMessage
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FirestoreMessagesSource(
-    private val database: FirebaseFirestore,
-    private val messagesPagingManager: MessagesPagingManager
+@Singleton
+class FirestoreMessagesSource @Inject constructor(
+    private val database: FirebaseFirestore
 ) : MessagesSource {
 
     private lateinit var newMessageListener: ListenerRegistration
@@ -20,18 +23,18 @@ class FirestoreMessagesSource(
 
         var query = chatReference
             .orderBy("timestamp", Query.Direction.DESCENDING)
-        query = messagesPagingManager.determineLoadDirection(query, pageIndex)
+        query = determineLoadDirection(query, pageIndex)
         query.limit(limit.toLong())
 
         val messageList = mutableListOf<Message>()
         return try {
             val snapshot: QuerySnapshot = query.get().await()
 
-            if (messagesPagingManager.isFirstLoad()) {
-                messagesPagingManager.setLastMessageTimestamp(snapshot.documents[0].getTimestamp("timestamp"))
+            if (isFirstLoad()) {
+                setLastMessageTimestamp(snapshot.documents[0].getTimestamp("timestamp"))
                 setUpHandlerNewMessageChanges(chatId, handleNewMessage)
             }
-            messagesPagingManager.setManagerParams(
+            setManagerParams(
                 firstLoadedDocument = snapshot.documents[0],
                 lastLoadedDocument = snapshot.documents[snapshot.size() - 1],
                 pageIndex = pageIndex
@@ -62,7 +65,7 @@ class FirestoreMessagesSource(
     private fun setUpHandlerNewMessageChanges(chatId: String, handleNewMessage: HandleNewMessage) {
         val chatReference = getChatReference(chatId)
         newMessageListener = chatReference
-            .whereGreaterThan("timestamp", messagesPagingManager.getLastMessageTimestamp()!!)
+            .whereGreaterThan("timestamp", getLastMessageTimestamp()!!)
             .addSnapshotListener { snapshot, e ->
 
                 Log.d("NewMessageListenerBlock", "called setupMessageListener listener block")
@@ -73,8 +76,10 @@ class FirestoreMessagesSource(
 
                 if (snapshot != null && !snapshot.isEmpty) {
                     for (documentChange in snapshot.documentChanges) {
-                        if (documentChange.type == DocumentChange.Type.ADDED)
-                            handleNewMessage(true)
+                        if (documentChange.type == DocumentChange.Type.ADDED) {
+                            val message = getMessage(documentChange.document)
+                            handleNewMessage(message)
+                        }
                     }
                 }
             }
@@ -87,13 +92,13 @@ class FirestoreMessagesSource(
 
 
     override fun removeStartAfterDocumentValue() {
-        messagesPagingManager.removeManagerData()
+        removeManagerData()
     }
 
 
     override fun removeNewMessageListener() {
         newMessageListener.remove()
-        messagesPagingManager.removeManagerData()
+        removeManagerData()
 
     }
 
@@ -125,5 +130,51 @@ class FirestoreMessagesSource(
             FirebaseFirestoreException.Code.UNAVAILABLE -> throw ConnectionException(exception.message ?: "")
             else -> throw UnknownException(exception.message ?: "")
         }
+    }
+
+    companion object {
+
+        private var firstLoadedDocument: DocumentSnapshot? = null
+        private var lastLoadedDocument: DocumentSnapshot? = null
+        private var lastMessageTimestamp: Timestamp? = null
+        private var pageIndex: Int = 0
+
+        fun setManagerParams(firstLoadedDocument: DocumentSnapshot?,
+                             lastLoadedDocument: DocumentSnapshot?,
+                             pageIndex: Int) {
+            this.firstLoadedDocument = firstLoadedDocument
+            this.lastLoadedDocument = lastLoadedDocument
+            this.pageIndex = pageIndex
+        }
+
+        fun setLastMessageTimestamp(lastMessageTimestamp: Timestamp?) {
+            this.lastMessageTimestamp = lastMessageTimestamp
+        }
+
+        fun getLastMessageTimestamp(): Timestamp? {
+            return this.lastMessageTimestamp
+        }
+
+        fun isFirstLoad(): Boolean = firstLoadedDocument == null
+
+        fun determineLoadDirection(query: Query, pageIndex: Int): Query {
+            return if(!isFirstLoad()) {
+                if(pageIndex > this.pageIndex)
+                    query.startAfter(lastLoadedDocument)
+                else if(pageIndex < this.pageIndex)
+                    query.endBefore(firstLoadedDocument)
+                else
+                    query.startAt(firstLoadedDocument)
+            } else
+                query
+        }
+
+        fun removeManagerData() {
+            firstLoadedDocument = null
+            lastLoadedDocument = null
+            lastMessageTimestamp = null
+            pageIndex = 0
+        }
+
     }
 }

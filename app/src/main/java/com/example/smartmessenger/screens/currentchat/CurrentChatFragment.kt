@@ -4,29 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.smartmessenger.R
-import com.example.smartmessenger.Singletons
 import com.example.smartmessenger.databinding.FragmentCurrentChatBinding
+import com.example.smartmessenger.model.settings.AppSettings
 import com.example.smartmessenger.screens.BaseFragment
-import com.example.smartmessenger.screens.createViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CurrentChatFragment : BaseFragment(R.layout.fragment_current_chat) {
 
     private val args by navArgs<CurrentChatFragmentArgs>()
-    override val viewModel by createViewModel { CurrentChatViewModel(Singletons.currentChatRepository) }
+    override val viewModel by viewModels<CurrentChatViewModel>()
     private lateinit var binding: FragmentCurrentChatBinding
     private lateinit var adapter: CurrentChatAdapter
     private lateinit var layoutManager: LinearLayoutManager
-
+    @Inject lateinit var appSettings: AppSettings
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCurrentChatBinding.inflate(inflater, container, false)
-        adapter = CurrentChatAdapter()
+        adapter = CurrentChatAdapter(appSettings)
 
         viewModel.getMessages(args.chatId)
         observeNewMessageReceived()
@@ -39,7 +42,6 @@ class CurrentChatFragment : BaseFragment(R.layout.fragment_current_chat) {
         binding.backButton.setOnClickListener { onBackButtonClicked() }
         setUpAdapter()
 
-
         return binding.root
     }
 
@@ -49,6 +51,7 @@ class CurrentChatFragment : BaseFragment(R.layout.fragment_current_chat) {
 
     private fun observeNewMessageReceived() = viewModel.messageReceived.observe(viewLifecycleOwner) {
         viewModel.removeStartAfterDocumentValue()
+        viewModel.setLastMessage(args.chatId, it)
         adapter.refresh()
 
         lifecycleScope.launch {

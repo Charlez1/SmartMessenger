@@ -12,7 +12,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
 
-
     <string name="connection_error">Can\'t connect to the server</string>
     <string name="auth_error">Auth error</string>
     <string name="backend_error">Ops, error on server! Please try again later.</string>
@@ -20,8 +19,14 @@
     <string name="invalid_user_error">Wrong login or password</string>
     <string name="too_many_requests_error">You have exceeded the maximum number of allowed attempts. Please try again later</string>
     <string name="password_mismatch_error">Password mismatch</string>
-    <string name="auth_weak_password">Password is weak. Change it</string>
+    <string name="username_too_short_error">Username too short. Need more than 5 letter</string>
+    <string name="username_illegal_argument_error">Username must start with "@"</string>
+    <string name="username_non_unique_error">Username is not unique</string>
+    <string name="auth_weak_password_error">Password is weak. Change it</string>
     <string name="account_already_exists_error">Account with this email already exist</string>
+
+
+    <string name="registration_is_success">Registration is success. Please Log In</string>
 
     <string name="field_is_empty">Field is empty</string>
     <string name="remember_me">Remember Me</string>

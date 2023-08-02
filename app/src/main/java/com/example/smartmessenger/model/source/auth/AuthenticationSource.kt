@@ -6,5 +6,7 @@ interface AuthenticationSource {
 
     suspend fun signUp(email: String, password: String)
 
+    suspend fun deleteCurrentUser()
+
     fun getCurrentUId(): String
 }

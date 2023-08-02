@@ -1,7 +1,5 @@
 package com.example.smartmessenger.model.source.pagingsource
 
-import android.util.Log
-import androidx.paging.LoadState
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.smartmessenger.model.repositories.currentchat.MessagesPageLoader
