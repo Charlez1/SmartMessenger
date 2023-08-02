@@ -18,8 +18,7 @@ This project is an Android messenger application developed in Kotlin. The app al
 
 Here are some screenshots of the Android messenger application:
 
-![Screenshot 1](screenshots/1.jpg)
-![Screenshot 2](screenshots/2.jpg)
+![Screenshot 1](screenshots/1.jpg) ![Screenshot 2](screenshots/2.jpg)
 
 # And also 
 
