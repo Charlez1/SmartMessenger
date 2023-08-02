@@ -18,8 +18,9 @@ This project is an Android messenger application developed in Kotlin. The app al
 
 Here are some screenshots of the Android messenger application:
 
-![Screenshot 1](screenshots/1.jpg) ![Screenshot 2](screenshots/2.jpg)
-<img src="screenshots/1.jpg" width="500">
+<img src="screenshots/1.jpg" width="200">
+<img src="screenshots/2.jpg" width="200">
+
 # And also 
 
 In the future, machine learning elements will be added for such functions as: voice control, decryption of voice messages, generation of messages based on a voice request, etc.
