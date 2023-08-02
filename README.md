@@ -7,11 +7,12 @@ This project is an Android messenger application developed in Kotlin. The app al
 
 ## Used Libraries and Technologies
 
+- MVVM (Model-View-ViewModel) architecture for a clean and scalable app design
+- Kotlin Coroutines for asynchronous programming and managing background tasks
+- RecyclerView for efficient message list display with paging 3 library
+- Hilt for dependency injection
 - Firestore Database for real-time message exchange.
 - Firebase Authentication for user authentication.
-- RecyclerView for efficient message list display with paging 3 library
-- MVVM (Model-View-ViewModel) architecture for a clean and scalable app design 
-- Kotlin Coroutines for asynchronous programming and managing background tasks
 
 ## Screenshots
 
