@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/auth_background_color"
-    tools:context=".screens.authentication.SingInFragment">
+    tools:context=".presentation.authentication.SingInFragment">
 
     <TextView
         android:id="@+id/textViewSignUp"

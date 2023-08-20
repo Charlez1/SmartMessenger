@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/singInFragment"
-        android:name="com.example.smartmessenger.screens.authentication.SingInFragment"
+        android:name="com.example.smartmessenger.presentation.authentication.SingInFragment"
         android:label="fragment_sing_in"
         tools:layout="@layout/fragment_sing_in">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/singUpFragment"
-        android:name="com.example.smartmessenger.screens.authentication.SingUpFragment"
+        android:name="com.example.smartmessenger.presentation.authentication.SingUpFragment"
         android:label="fragment_sing_up"
         tools:layout="@layout/fragment_sing_up">
         <action
@@ -29,12 +29,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.smartmessenger.screens.profile.ProfileFragment"
+        android:name="com.example.smartmessenger.presentation.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/chatListFragment"
-        android:name="com.example.smartmessenger.screens.chatlist.ChatListFragment"
+        android:name="com.example.smartmessenger.presentation.chatlist.ChatListFragment"
         android:label="fragment_dialogs"
         tools:layout="@layout/fragment_chat_list" >
         <action
@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/currentChatFragment"
-        android:name="com.example.smartmessenger.screens.currentchat.CurrentChatFragment"
+        android:name="com.example.smartmessenger.presentation.currentchat.CurrentChatFragment"
         android:label="CurrentChatFragment">
         <argument
             android:name="chatId"

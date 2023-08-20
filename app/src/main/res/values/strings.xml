@@ -2,7 +2,7 @@
     <string name="app_name">Dolphi</string>
 
     <string name="field_email">email</string>
-    <string name="field_username">username</string>
+    <string name="field_username">\@username</string>
     <string name="field_password">password</string>
     <string name="field_repeat_password">repeat password</string>
     <string name="action_sign_in">Log In</string>
@@ -24,7 +24,6 @@
     <string name="username_non_unique_error">Username is not unique</string>
     <string name="auth_weak_password_error">Password is weak. Change it</string>
     <string name="account_already_exists_error">Account with this email already exist</string>
-
 
     <string name="registration_is_success">Registration is success. Please Log In</string>
 

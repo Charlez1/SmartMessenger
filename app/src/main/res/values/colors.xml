@@ -23,4 +23,12 @@
     <color name="button_background_button">#F36400</color>
 
     <color name="mtrl_textinput_default_box_stroke_color">#DCE0E7</color>
+
+
+    <color name="chat_item_username_color">#000000</color>
+    <color name="chat_item_last_message_color">#3E3E3E</color>
+    <color name="chat_item_timestamp_color">#818181</color>
+
+    <color name="chat_item_my_mes_read_color">#F36400</color>
+
 </resources>
